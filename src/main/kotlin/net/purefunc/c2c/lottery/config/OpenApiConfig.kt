@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @OpenAPIDefinition(
-    info = Info(title = "Ticket Service API", version = "0.1.0"),
+    info = Info(title = "C2C Lottery Service API", version = "0.0.1"),
     servers = [
         Server(
-            url = "{schema}://localhost:8080/ticket-service",
+            url = "{schema}://localhost:8080/c2c-lottery-service",
             variables = [
                 ServerVariable(
                     name = "schema",
@@ -23,17 +23,17 @@ import org.springframework.context.annotation.Configuration
             ],
             description = "ide",
         ),
-        Server(
-            url = "{schema}://twshop.tech/ticket-service",
-            variables = [
-                ServerVariable(
-                    name = "schema",
-                    allowableValues = ["https"],
-                    defaultValue = "https",
-                ),
-            ],
-            description = "stage-env",
-        ),
+//        Server(
+//            url = "{schema}://twshop.tech/ticket-service",
+//            variables = [
+//                ServerVariable(
+//                    name = "schema",
+//                    allowableValues = ["https"],
+//                    defaultValue = "https",
+//                ),
+//            ],
+//            description = "stage-env",
+//        ),
     ],
 )
 @SecurityScheme(

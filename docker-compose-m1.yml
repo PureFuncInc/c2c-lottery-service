@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   redis:
-    image: redis:6
+    image: arm64v8/redis:6
     expose:
       - 6379
     ports:
@@ -11,7 +11,7 @@ services:
       - default
 
   postgresql:
-    image: postgres:13
+    image: arm64v8/postgres:13
     environment:
       - POSTGRES_PASSWORD=rootroot
     expose:

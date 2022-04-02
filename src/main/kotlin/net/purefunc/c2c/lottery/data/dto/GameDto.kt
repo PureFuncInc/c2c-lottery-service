@@ -24,6 +24,8 @@ data class GameDto(
 
     companion object {
         suspend fun queryByUuid(gameRepository: GameRepository, uuid: String) = gameRepository.findByUuid(uuid)
+
+        suspend fun queryAll(gameRepository: GameRepository) = gameRepository.findAll()
     }
 
     suspend fun addGame(gameRepository: GameRepository) = gameRepository.save(this)

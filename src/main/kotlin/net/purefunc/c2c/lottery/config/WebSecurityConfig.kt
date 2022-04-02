@@ -2,7 +2,6 @@ package net.purefunc.c2c.lottery.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
@@ -34,13 +33,12 @@ class WebSecurityConfig {
             .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
 
             .authorizeExchange()
-            .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .pathMatchers("/swagger-ui.html", "/webjars/**", "/v3/api-docs", "/v3/api-docs/swagger-config", "/api-docs")
-            .permitAll()
-            .pathMatchers(HttpMethod.GET, "/api/v1.0/auth").permitAll()
-            .pathMatchers(HttpMethod.POST, "/api/v1.0/auth").permitAll()
-            .pathMatchers(HttpMethod.GET, "/api/v1.0/wallet").permitAll()
-            .pathMatchers("/**").authenticated()
+//            .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//            .pathMatchers("/swagger-ui.html", "/webjars/**", "/v3/api-docs", "/v3/api-docs/swagger-config", "/api-docs").permitAll()
+//            .pathMatchers(HttpMethod.GET, "/api/v1.0/auth").permitAll()
+//            .pathMatchers(HttpMethod.POST, "/api/v1.0/auth").permitAll()
+//            .pathMatchers("/**").authenticated()
+            .pathMatchers("/**").permitAll()
 
             .and().build()
     }

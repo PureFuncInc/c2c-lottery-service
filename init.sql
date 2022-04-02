@@ -6,6 +6,8 @@ create table member
     email varchar(255),
     role  varchar(255)
 );
+INSERT INTO member (email, role)
+VALUES ('yfr.huang@gmail.com', 'USER');
 
 drop table if exists wallet;
 create table wallet
@@ -16,6 +18,9 @@ create table wallet
     address varchar(255),
     balance numeric(19, 4)
 );
+INSERT INTO wallet (email, address, balance)
+VALUES ('yfr.huang@gmail.com', '', 0.0000);
+
 
 drop table if exists game;
 create table game

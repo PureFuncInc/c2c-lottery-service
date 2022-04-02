@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.web.controller
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.ext.return200
@@ -14,16 +15,23 @@ import java.security.Principal
 
 @RestController
 @RequestMapping("/api/v1.0/games")
+@SecurityRequirement(name = "BearerAuth")
 class GameController(
     private val gameRepository: GameRepository,
 ) {
 
     @GetMapping("/{uuid}")
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun getGames(
+    suspend fun getGamesByUuid(
         @PathVariable uuid: String,
         principal: Principal,
     ) = GameDto.queryByUuid(gameRepository, uuid)
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun getGames(
+        principal: Principal,
+    ) = GameDto.queryAll(gameRepository)
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")

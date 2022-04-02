@@ -56,6 +56,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.6")
     implementation("org.springdoc:springdoc-openapi-security:1.6.6")
 
+    implementation(kotlin("stdlib"))
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webflux")

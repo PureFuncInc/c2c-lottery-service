@@ -1,5 +1,8 @@
 package net.purefunc.c2c.lottery.web.controller
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import net.purefunc.c2c.lottery.data.dao.MemberDao
 import net.purefunc.c2c.lottery.data.dao.WalletDao
 import net.purefunc.c2c.lottery.data.dto.AuthDto
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "AUTH 頁面")
 @RestController
 @RequestMapping("/api/v1.0/auth")
+@SecurityRequirement(name = "BearerAuth")
 class AuthController(
     private val cacheContext: CacheContext,
     private val gmailClient: GmailClient,
@@ -23,11 +28,13 @@ class AuthController(
     private val walletDao: WalletDao,
 ) {
 
+    @Operation(summary = "取得 JWT")
     @GetMapping
     fun getAuth(
         @RequestParam token: String,
     ) = AuthDto.loginOrSignup(cacheContext, token).returnToken()
 
+    @Operation(summary = "發送 Token 到 EMail")
     @PostMapping
     suspend fun postAuth(
         @RequestBody authDto: AuthDto,
