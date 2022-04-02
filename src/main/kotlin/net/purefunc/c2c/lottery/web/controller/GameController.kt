@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
@@ -33,8 +34,10 @@ class GameController(
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getGames(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "10") size: Int,
         principal: Principal,
-    ) = GameDto.queryAll(gameRepository).return200()
+    ) = GameDto.queryAll(gameRepository, page, size).return200()
 
     @Operation(summary = "新增賽事")
     @PostMapping

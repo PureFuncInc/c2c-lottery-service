@@ -8,7 +8,7 @@ interface GameRepository {
 
     suspend fun findByUuid(uuid: String): Either<Throwable, GameDtoRes>
 
-    suspend fun findAll(): Either<Throwable, List<GameDtoRes>>
+    suspend fun findAll(page: Int, size: Int): Either<Throwable, List<GameDtoRes>>
 
     suspend fun save(gameDto: GameDto): Either<Throwable, GameDtoRes>
 }

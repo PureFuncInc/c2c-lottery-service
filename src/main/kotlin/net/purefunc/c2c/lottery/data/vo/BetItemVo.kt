@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 data class BetItemVo(
 
-    @Schema(description = "投注項目類型", example = "SCORE_SUM")
+    @Schema(description = "投注項目類型", example = "SCORE_SUM_BIG")
     val type: BetType,
 
     @Schema(description = "投注項目數值", example = "240")

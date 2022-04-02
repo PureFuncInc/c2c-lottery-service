@@ -35,9 +35,9 @@ class GameRepositoryImpl(
         }
 
     @Transactional(readOnly = true)
-    override suspend fun findAll() =
+    override suspend fun findAll(page: Int, size: Int) =
         catch {
-            gameDao.findGame().toList()
+            gameDao.findGame(size, page * size).toList()
                 .groupBy { it.uuid }
                 .map {
                     GameDtoRes(

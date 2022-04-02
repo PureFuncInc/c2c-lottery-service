@@ -25,14 +25,13 @@ VALUES ('yfr.huang@gmail.com', '', 0.0000);
 drop table if exists game;
 create table game
 (
-    id         serial
+    id              serial
         constraint game_id_pk primary key,
-    uuid       varchar(255),
-    guest_name varchar(255),
-    host_name  varchar(255),
-    sport_type varchar(255),
-    start_date varchar(255),
-    end_date   bigint
+    uuid            varchar(255),
+    guest_name      varchar(255),
+    host_name       varchar(255),
+    sport_type      varchar(255),
+    end_submit_date bigint
 );
 
 drop table if exists bet_item;
