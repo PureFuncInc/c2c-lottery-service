@@ -3,7 +3,7 @@ package net.purefunc.c2c.lottery.data.dto.response
 import net.purefunc.c2c.lottery.data.enu.SportType
 import net.purefunc.c2c.lottery.data.vo.BetItem
 
-data class MatchDtoRes(
+data class GameDtoRes(
 
     val uuid: String,
 

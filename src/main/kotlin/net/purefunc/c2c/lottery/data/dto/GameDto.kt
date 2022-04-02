@@ -1,13 +1,13 @@
 package net.purefunc.c2c.lottery.data.dto
 
-import net.purefunc.c2c.lottery.data.dto.response.MatchDtoRes
+import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
 import net.purefunc.c2c.lottery.data.enu.SportType
-import net.purefunc.c2c.lottery.data.repository.MatchRepository
-import net.purefunc.c2c.lottery.data.table.MatchDo
+import net.purefunc.c2c.lottery.data.repository.GameRepository
+import net.purefunc.c2c.lottery.data.table.GameDo
 import net.purefunc.c2c.lottery.data.vo.BetItem
 import net.purefunc.c2c.lottery.ext.randomUUID
 
-data class MatchDto(
+data class GameDto(
 
     val guestName: String,
 
@@ -23,13 +23,13 @@ data class MatchDto(
 ) {
 
     companion object {
-        suspend fun queryByUuid(matchRepository: MatchRepository, uuid: String) = matchRepository.findByUuid(uuid)
+        suspend fun queryByUuid(gameRepository: GameRepository, uuid: String) = gameRepository.findByUuid(uuid)
     }
 
-    suspend fun addMatch(matchRepository: MatchRepository) = matchRepository.save(this)
+    suspend fun addGame(gameRepository: GameRepository) = gameRepository.save(this)
 
-    fun toMatchDo() =
-        MatchDo(
+    fun toGameDo() =
+        GameDo(
             id = null,
             uuid = randomUUID(),
             guestName = guestName,
@@ -39,8 +39,8 @@ data class MatchDto(
             endDate = endDate,
         )
 
-    fun toMatchDtoRes(uuid: String) =
-        MatchDtoRes(
+    fun toGameDtoRes(uuid: String) =
+        GameDtoRes(
             uuid = uuid,
             guestName = guestName,
             hostName = hostName,

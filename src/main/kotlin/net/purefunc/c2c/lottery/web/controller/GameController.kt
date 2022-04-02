@@ -1,7 +1,7 @@
 package net.purefunc.c2c.lottery.web.controller
 
-import net.purefunc.c2c.lottery.data.dto.MatchDto
-import net.purefunc.c2c.lottery.data.repository.MatchRepository
+import net.purefunc.c2c.lottery.data.dto.GameDto
+import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.ext.return200
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
 @RestController
-@RequestMapping("/api/v1.0/matches")
-class MatchController(
-    private val matchRepository: MatchRepository,
+@RequestMapping("/api/v1.0/games")
+class GameController(
+    private val gameRepository: GameRepository,
 ) {
 
     @GetMapping("/{uuid}")
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun getMatches(
+    suspend fun getGames(
         @PathVariable uuid: String,
         principal: Principal,
-    ) = MatchDto.queryByUuid(matchRepository, uuid)
+    ) = GameDto.queryByUuid(gameRepository, uuid)
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun postMatches(
-        @RequestBody matchDto: MatchDto,
+    suspend fun postGames(
+        @RequestBody gameDto: GameDto,
         principal: Principal,
-    ) = matchDto.addMatch(matchRepository).return200()
+    ) = gameDto.addGame(gameRepository).return200()
 }

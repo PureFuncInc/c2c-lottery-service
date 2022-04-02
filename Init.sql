@@ -33,10 +33,10 @@ create table game
 drop table if exists bet_item;
 create table bet_item
 (
-    id       serial
+    id      serial
         constraint bet_item_id_pk primary key,
-    match_id integer,
-    type     varchar(255),
-    value    varchar(255),
-    balance  numeric(19, 4)
+    game_id integer,
+    type    varchar(255),
+    value   varchar(255),
+    balance numeric(19, 4)
 );
