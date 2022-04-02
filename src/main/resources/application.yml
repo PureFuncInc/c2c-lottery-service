@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: c2c-lottery-service
+  profiles:
+    active: ide
+  webflux:
+    base-path: /${spring.application.name}
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+  codec:
+    max-in-memory-size: 10MB
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /api-docs
+
+gmail:
+  email: yfr.huang
+  password: bjzpziapsqzpbasz
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: ide
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: rootroot
+#logging:
+#  level:
+#    io.r2dbc.postgresql.QUERY: DEBUG
+#    io.r2dbc.postgresql.PARAM: DEBUG
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: stage
+  r2dbc:
+    url: r2dbc:postgresql://postgresql:5432/postgres
+    username: postgres
+    password: rootroot
