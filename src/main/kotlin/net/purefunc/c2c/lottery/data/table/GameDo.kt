@@ -18,7 +18,5 @@ data class GameDo(
 
     val sportType: SportType,
 
-    val startDate: Long,
-
-    val endDate: Long,
+    val endSubmitDate: Long,
 )

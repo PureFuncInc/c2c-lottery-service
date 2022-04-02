@@ -43,5 +43,5 @@ create table bet_item
     game_id integer,
     type    varchar(255),
     value   varchar(255),
-    balance numeric(19, 4)
+    odds numeric(19, 4)
 );

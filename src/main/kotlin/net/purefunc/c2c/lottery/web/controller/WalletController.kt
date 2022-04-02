@@ -20,7 +20,7 @@ class WalletController(
     private val walletDao: WalletDao,
 ) {
 
-    @Operation(summary = "取得 Wallet")
+    @Operation(summary = "取得錢包資訊")
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getWallet(

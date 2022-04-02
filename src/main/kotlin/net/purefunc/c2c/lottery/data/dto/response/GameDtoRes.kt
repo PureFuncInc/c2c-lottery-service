@@ -1,7 +1,7 @@
 package net.purefunc.c2c.lottery.data.dto.response
 
 import net.purefunc.c2c.lottery.data.enu.SportType
-import net.purefunc.c2c.lottery.data.vo.BetItem
+import net.purefunc.c2c.lottery.data.vo.BetItemVo
 
 data class GameDtoRes(
 
@@ -13,9 +13,7 @@ data class GameDtoRes(
 
     val sportType: SportType,
 
-    val betItems: List<BetItem>,
+    val betItems: List<BetItemVo>,
 
-    val startDate: Long,
-
-    val endDate: Long,
+    val endSubmitDate: Long,
 )

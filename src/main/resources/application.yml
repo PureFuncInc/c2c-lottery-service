@@ -15,11 +15,6 @@ spring:
       repositories:
         enabled: false
 
-springdoc:
-  swagger-ui:
-    enabled: true
-    path: /api-docs
-
 gmail:
   username: yfr.huang
   password: bjzpziapsqzpbasz

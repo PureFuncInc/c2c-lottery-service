@@ -17,7 +17,7 @@ data class WalletDto(
     companion object {
         suspend fun queryByEmail(walletDao: WalletDao, email: String) =
             catch {
-                walletDao.findByEmail(email) ?: throw IllegalStateException("")
+                walletDao.findByEmail(email) ?: throw IllegalStateException()
             }
     }
 }

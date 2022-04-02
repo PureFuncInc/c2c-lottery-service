@@ -1,6 +1,7 @@
 package net.purefunc.c2c.lottery.data.dto
 
 import arrow.core.Either.Companion.catch
+import io.swagger.v3.oas.annotations.media.Schema
 import net.purefunc.c2c.lottery.data.dao.MemberDao
 import net.purefunc.c2c.lottery.data.dao.WalletDao
 import net.purefunc.c2c.lottery.data.table.MemberDo
@@ -16,6 +17,7 @@ import java.math.BigDecimal
 @Slf4j
 data class AuthDto(
 
+    @Schema(description = "電子信箱", example = "yfr.huang@gmail.com")
     val email: String,
 ) {
 
@@ -26,7 +28,7 @@ data class AuthDto(
         ) = catch {
             val member =
                 if (token == "111111") MemberDo(null, "yfr.huang@gmail.com", "USER")
-                else cacheContext.tokenToMember.getIfPresent(token) ?: throw IllegalStateException("")
+                else cacheContext.tokenToMember.getIfPresent(token) ?: throw IllegalStateException()
 
             JwtToken.generate(
                 subject = member.email,

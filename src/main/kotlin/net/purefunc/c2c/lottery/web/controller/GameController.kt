@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.web.controller
 
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.repository.GameRepository
@@ -20,19 +21,22 @@ class GameController(
     private val gameRepository: GameRepository,
 ) {
 
+    @Operation(summary = "根據 uuid 查詢賽事")
     @GetMapping("/{uuid}")
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getGamesByUuid(
         @PathVariable uuid: String,
         principal: Principal,
-    ) = GameDto.queryByUuid(gameRepository, uuid)
+    ) = GameDto.queryByUuid(gameRepository, uuid).return200()
 
+    @Operation(summary = "查詢所有賽事")
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getGames(
         principal: Principal,
-    ) = GameDto.queryAll(gameRepository)
+    ) = GameDto.queryAll(gameRepository).return200()
 
+    @Operation(summary = "新增賽事")
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun postGames(
