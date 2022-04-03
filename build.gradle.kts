@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.purefunc:transmit-sdk:1.3.2")
+    implementation("net.purefunc:transmit-sdk:1.3.4")
 
     implementation("com.github.ben-manes.caffeine:caffeine:2.9.3")
 

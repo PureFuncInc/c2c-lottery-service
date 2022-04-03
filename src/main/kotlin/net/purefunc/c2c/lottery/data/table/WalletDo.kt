@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.data.table
 
+import net.purefunc.c2c.lottery.data.dto.WalletDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.math.BigDecimal
@@ -15,4 +16,12 @@ data class WalletDo(
     var address: String,
 
     var balance: BigDecimal,
-)
+) {
+
+    fun toDto() =
+        WalletDto(
+            email = email,
+            address = address,
+            balance = balance,
+        )
+}

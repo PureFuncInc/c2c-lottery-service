@@ -11,9 +11,11 @@ import net.purefunc.c2c.lottery.ext.randomUUID
 import net.purefunc.c2c.lottery.web.CacheContext
 import net.purefunc.c2c.lottery.web.security.JwtToken
 import net.purefunc.core.ext.Slf4j
-import net.purefunc.core.ext.Slf4j.Companion.log
 import net.purefunc.transmit.sdk.GmailClient
 import java.math.BigDecimal
+import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 @Slf4j
 data class AuthDto(
@@ -21,6 +23,8 @@ data class AuthDto(
     @Schema(description = "電子信箱", example = "yfr.huang@gmail.com")
     val email: String,
 ) {
+
+    private var threadPoolExecutor = ThreadPoolExecutor(10, 10, 60L, TimeUnit.SECONDS, ArrayBlockingQueue(100))
 
     companion object {
         fun loginOrSignup(
@@ -54,14 +58,19 @@ data class AuthDto(
             saveMember
         }
 
-        val send = gmailClient.send(
-            subject = "Sign in to C2C Lottery",
-            personal = "C2C Lottery",
-            address = email,
-            htmlContent = "<h1>Click the link below to sign in to your C2C Lottery account.</h1><h1>This link will expire in 5 minutes and can only be used once.</h1><p> https://c2c.net </p>"
+        val token = randomUUID()
+        val url = "https://localhost:8080/c2c-lottery-service/api/v1.0/auth?token=$token"
+        threadPoolExecutor.submit(
+            Thread {
+                gmailClient.send(
+                    subject = "Sign in to C2C Lottery",
+                    personal = "C2C Lottery",
+                    address = email,
+                    htmlContent = "<h1>Click the link below to sign in to your C2C Lottery account.</h1><p>This link will expire in 5 minutes and can only be used once.</p><p>$url</p>"
+                )
+            }
         )
-        log.info(send.toString())
 
-        cacheContext.tokenToMember.put(randomUUID(), findMember)
+        cacheContext.tokenToMember.put(token, findMember)
     }
 }
