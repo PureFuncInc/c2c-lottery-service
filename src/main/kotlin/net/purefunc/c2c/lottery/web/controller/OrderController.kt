@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
@@ -24,17 +25,19 @@ class OrderController(
     @Operation(summary = "根據 uuid 查詢投注單")
     @GetMapping("/{uuid}")
     @PreAuthorize("hasAuthority('USER')")
-    fun getOrdersByUuid(
+    suspend fun getOrdersByUuid(
         @PathVariable uuid: String,
         principal: Principal,
-    ) = ""
+    ) = OrderDto.queryByUuid(orderRepository, uuid).return200()
 
     @Operation(summary = "查詢所有投注單")
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
-    fun getOrders(
+    suspend fun getOrders(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "10") size: Int,
         principal: Principal,
-    ) = ""
+    ) = OrderDto.queryAll(orderRepository, page, size).return200()
 
     @Operation(summary = "提交投注")
     @PostMapping

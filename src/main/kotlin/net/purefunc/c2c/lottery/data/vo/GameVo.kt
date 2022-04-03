@@ -14,7 +14,7 @@ data class GameVo(
 
     val sportType: SportType,
 
-    val betTypeUuid: String,
+    val betItemUuid: String,
 
     val type: BetType,
 

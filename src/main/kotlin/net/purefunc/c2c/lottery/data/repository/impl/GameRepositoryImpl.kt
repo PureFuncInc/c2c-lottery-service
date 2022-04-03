@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.toList
 import net.purefunc.c2c.lottery.data.dao.BetItemDao
 import net.purefunc.c2c.lottery.data.dao.GameDao
 import net.purefunc.c2c.lottery.data.dto.GameDto
+import net.purefunc.c2c.lottery.data.dto.response.BetItemDtoRes
 import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.BetItemDo
@@ -29,7 +30,7 @@ class GameRepositoryImpl(
                 guestName = gameVos[0].guestName,
                 hostName = gameVos[0].hostName,
                 sportType = gameVos[0].sportType,
-                betItemUuids = gameVos.map { it.betTypeUuid }.toList(),
+                betItems = gameVos.map { BetItemDtoRes(it.betItemUuid, it.type, it.value, it.odds) }.toList(),
                 endSubmitDate = gameVos[0].endSubmitDate,
             )
         }
@@ -45,7 +46,12 @@ class GameRepositoryImpl(
                         guestName = it.value[0].guestName,
                         hostName = it.value[0].hostName,
                         sportType = it.value[0].sportType,
-                        betItemUuids = it.value.map { gameVo -> gameVo.uuid }.toList(),
+                        betItems = it.value.map { gameVo ->
+                            BetItemDtoRes(gameVo.betItemUuid,
+                                gameVo.type,
+                                gameVo.value,
+                                gameVo.odds)
+                        }.toList(),
                         endSubmitDate = it.value[0].endSubmitDate,
                     )
                 }

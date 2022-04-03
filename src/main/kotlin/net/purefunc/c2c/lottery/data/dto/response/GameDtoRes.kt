@@ -12,7 +12,7 @@ data class GameDtoRes(
 
     val sportType: SportType,
 
-    val betItemUuids: List<String>,
+    val betItems: List<BetItemDtoRes>,
 
     val endSubmitDate: Long,
 )

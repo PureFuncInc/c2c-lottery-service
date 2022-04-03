@@ -12,5 +12,12 @@ data class OrderDto(
     val betItemUuids: List<String>,
 ) {
 
+    companion object {
+        suspend fun queryByUuid(orderRepository: OrderRepository, uuid: String) = orderRepository.findByUuid(uuid)
+
+        suspend fun queryAll(orderRepository: OrderRepository, page: Int, size: Int) =
+            orderRepository.findAll(page, size)
+    }
+
     suspend fun add(orderRepository: OrderRepository, email: String) = orderRepository.save(this, email)
 }

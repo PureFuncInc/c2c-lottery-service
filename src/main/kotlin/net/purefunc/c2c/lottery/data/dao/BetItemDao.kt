@@ -5,5 +5,5 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface BetItemDao : CoroutineCrudRepository<BetItemDo, Long> {
 
-    fun findByUuid(uuid: String): BetItemDo?
+    suspend fun findByUuid(uuid: String): BetItemDo?
 }

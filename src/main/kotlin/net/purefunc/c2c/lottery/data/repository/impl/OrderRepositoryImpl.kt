@@ -71,7 +71,9 @@ class OrderRepositoryImpl(
             val save =
                 orderDao.save(OrderDo(null, randomUUID(), email, orderDto.orderType, orderDto.multiple, genUnixMilli()))
             orderDto.betItemUuids
-                .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
+                .map {
+                    betItemDao.findByUuid(it) ?: throw IllegalStateException()
+                }
                 .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
 
             save.uuid

@@ -63,6 +63,7 @@ create table slip
 (
     id          serial
         constraint slip_id_pk primary key,
+    uuid        varchar(255),
     order_id    integer,
     bet_item_id integer
 );
