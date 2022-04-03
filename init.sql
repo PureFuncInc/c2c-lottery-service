@@ -39,8 +39,30 @@ create table bet_item
 (
     id      serial
         constraint bet_item_id_pk primary key,
+    uuid    varchar(255),
     game_id integer,
     type    varchar(255),
     value   varchar(255),
-    odds numeric(19, 4)
+    odds    numeric(19, 4)
+);
+
+drop table if exists sport_order;
+create table sport_order
+(
+    id          serial
+        constraint sport_order_id_pk primary key,
+    uuid        varchar(255),
+    email       varchar(255),
+    type        varchar(255),
+    multiple    integer,
+    create_date bigint
+);
+
+drop table if exists slip;
+create table slip
+(
+    id          serial
+        constraint slip_id_pk primary key,
+    order_id    integer,
+    bet_item_id integer
 );

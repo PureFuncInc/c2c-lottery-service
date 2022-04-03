@@ -1,10 +1,10 @@
-package net.purefunc.c2c.lottery.data.vo
+package net.purefunc.c2c.lottery.data.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
 import net.purefunc.c2c.lottery.data.enu.BetType
 import java.math.BigDecimal
 
-data class BetItemVo(
+data class BetItemDto(
 
     @Schema(description = "投注項目類型", example = "SCORE_SUM_BIG")
     val type: BetType,

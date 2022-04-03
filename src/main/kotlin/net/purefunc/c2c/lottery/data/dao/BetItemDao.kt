@@ -4,4 +4,6 @@ import net.purefunc.c2c.lottery.data.table.BetItemDo
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface BetItemDao : CoroutineCrudRepository<BetItemDo, Long> {
+
+    fun findByUuid(uuid: String): BetItemDo?
 }

@@ -45,5 +45,5 @@ class GameController(
     suspend fun postGames(
         @RequestBody gameDto: GameDto,
         principal: Principal,
-    ) = gameDto.addGame(gameRepository).return200()
+    ) = gameDto.add(gameRepository).return200()
 }

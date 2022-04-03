@@ -8,7 +8,7 @@ import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.BetItemDo
-import net.purefunc.c2c.lottery.data.vo.BetItemVo
+import net.purefunc.c2c.lottery.ext.randomUUID
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
@@ -29,7 +29,7 @@ class GameRepositoryImpl(
                 guestName = gameVos[0].guestName,
                 hostName = gameVos[0].hostName,
                 sportType = gameVos[0].sportType,
-                betItems = gameVos.map { BetItemVo(it.type, it.value, it.odds) }.toList(),
+                betItemUuids = gameVos.map { it.betTypeUuid }.toList(),
                 endSubmitDate = gameVos[0].endSubmitDate,
             )
         }
@@ -45,8 +45,7 @@ class GameRepositoryImpl(
                         guestName = it.value[0].guestName,
                         hostName = it.value[0].hostName,
                         sportType = it.value[0].sportType,
-                        betItems = it.value.map { gameVo -> BetItemVo(gameVo.type, gameVo.value, gameVo.odds) }
-                            .toList(),
+                        betItemUuids = it.value.map { gameVo -> gameVo.uuid }.toList(),
                         endSubmitDate = it.value[0].endSubmitDate,
                     )
                 }
@@ -55,11 +54,11 @@ class GameRepositoryImpl(
     @Transactional
     override suspend fun save(gameDto: GameDto) =
         catch {
-            val matchDo = gameDao.save(gameDto.toGameDo())
+            val gameDo = gameDao.save(gameDto.toGameDo())
             gameDto.betItems
-                .map { BetItemDo(null, matchDo.id!!, it.type, it.value, it.odds) }
-                .forEach { betItemDao.save(it) }
+                .map { BetItemDo(null, randomUUID(), gameDo.id!!, it.type, it.value, it.odds) }
+                .map { betItemDao.save(it).uuid }
 
-            gameDto.toGameDtoRes(matchDo.uuid)
+            gameDo.uuid
         }
 }

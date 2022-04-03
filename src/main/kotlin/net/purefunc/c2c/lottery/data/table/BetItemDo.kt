@@ -11,6 +11,8 @@ data class BetItemDo(
     @Id
     val id: Long?,
 
+    var uuid: String,
+
     var gameId: Long,
 
     var type: BetType,

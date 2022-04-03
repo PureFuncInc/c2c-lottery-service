@@ -1,12 +1,10 @@
-package net.purefunc.c2c.lottery.data.vo
+package net.purefunc.c2c.lottery.data.dto.response
 
 import net.purefunc.c2c.lottery.data.enu.BetType
 import net.purefunc.c2c.lottery.data.enu.SportType
 import java.math.BigDecimal
 
-data class GameVo(
-
-    val uuid: String,
+data class SlipDtoRes(
 
     val guestName: String,
 
@@ -14,13 +12,9 @@ data class GameVo(
 
     val sportType: SportType,
 
-    val betTypeUuid: String,
-
     val type: BetType,
 
     val value: String,
 
     val odds: BigDecimal,
-
-    val endSubmitDate: Long,
 )

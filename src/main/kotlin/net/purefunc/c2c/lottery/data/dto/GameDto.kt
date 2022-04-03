@@ -1,11 +1,9 @@
 package net.purefunc.c2c.lottery.data.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
-import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
 import net.purefunc.c2c.lottery.data.enu.SportType
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.GameDo
-import net.purefunc.c2c.lottery.data.vo.BetItemVo
 import net.purefunc.c2c.lottery.ext.randomUUID
 
 data class GameDto(
@@ -20,7 +18,7 @@ data class GameDto(
     val sportType: SportType,
 
     @Schema(description = "投注項目")
-    val betItems: List<BetItemVo>,
+    val betItems: List<BetItemDto>,
 
     @Schema(description = "截止投注時間 (Unix Time Milli)", example = "1648909996710")
     val endSubmitDate: Long,
@@ -32,7 +30,7 @@ data class GameDto(
         suspend fun queryAll(gameRepository: GameRepository, page: Int, size: Int) = gameRepository.findAll(page, size)
     }
 
-    suspend fun addGame(gameRepository: GameRepository) = gameRepository.save(this)
+    suspend fun add(gameRepository: GameRepository) = gameRepository.save(this)
 
     fun toGameDo() =
         GameDo(
@@ -41,16 +39,6 @@ data class GameDto(
             guestName = guestName,
             hostName = hostName,
             sportType = sportType,
-            endSubmitDate = endSubmitDate,
-        )
-
-    fun toGameDtoRes(uuid: String) =
-        GameDtoRes(
-            uuid = uuid,
-            guestName = guestName,
-            hostName = hostName,
-            sportType = sportType,
-            betItems = betItems,
             endSubmitDate = endSubmitDate,
         )
 }

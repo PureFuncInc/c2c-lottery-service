@@ -10,5 +10,5 @@ interface GameRepository {
 
     suspend fun findAll(page: Int, size: Int): Either<Throwable, List<GameDtoRes>>
 
-    suspend fun save(gameDto: GameDto): Either<Throwable, GameDtoRes>
+    suspend fun save(gameDto: GameDto): Either<Throwable, String>
 }
