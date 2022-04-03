@@ -24,7 +24,7 @@ data class AuthDto(
     val email: String,
 ) {
 
-    private var threadPoolExecutor = ThreadPoolExecutor(10, 10, 60L, TimeUnit.SECONDS, ArrayBlockingQueue(100))
+    private val threadPoolExecutor = ThreadPoolExecutor(10, 10, 60L, TimeUnit.SECONDS, ArrayBlockingQueue(100))
 
     companion object {
         fun loginOrSignup(
