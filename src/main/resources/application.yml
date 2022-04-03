@@ -16,8 +16,8 @@ spring:
         enabled: false
 
 gmail:
-  username: yfr.huang
-  password: bjzpziapsqzpbasz
+  username: yfr.huang@gmail.com
+  password: alvmrykqxgqcjbqo
 
 ---
 

@@ -11,6 +11,7 @@ import net.purefunc.c2c.lottery.ext.randomUUID
 import net.purefunc.c2c.lottery.web.CacheContext
 import net.purefunc.c2c.lottery.web.security.JwtToken
 import net.purefunc.core.ext.Slf4j
+import net.purefunc.core.ext.Slf4j.Companion.log
 import net.purefunc.transmit.sdk.GmailClient
 import java.math.BigDecimal
 
@@ -53,12 +54,13 @@ data class AuthDto(
             saveMember
         }
 
-//        gmailClient.send(
-//            subject = "Sign in to C2C Lottery",
-//            personal = "C2C Lottery",
-//            address = email,
-//            htmlContent = "<h1>Click the link below to sign in to your Medium account.</h1><h1>This link will expire in 5 minutes and can only be used once.</h1><p> https://c2c.net </p>"
-//        )
+        val send = gmailClient.send(
+            subject = "Sign in to C2C Lottery",
+            personal = "C2C Lottery",
+            address = email,
+            htmlContent = "<h1>Click the link below to sign in to your C2C Lottery account.</h1><h1>This link will expire in 5 minutes and can only be used once.</h1><p> https://c2c.net </p>"
+        )
+        log.info(send.toString())
 
         cacheContext.tokenToMember.put(randomUUID(), findMember)
     }
