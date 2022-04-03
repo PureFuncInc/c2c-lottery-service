@@ -57,7 +57,7 @@ class GameRepositoryImpl(
                 }
         }
 
-    @Transactional
+    @Transactional(rollbackFor = [Exception::class])
     override suspend fun save(gameDto: GameDto) =
         catch {
             val gameDo = gameDao.save(gameDto.toGameDo())

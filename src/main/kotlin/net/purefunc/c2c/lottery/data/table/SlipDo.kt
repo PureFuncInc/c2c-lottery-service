@@ -9,9 +9,9 @@ data class SlipDo(
     @Id
     val id: Long?,
 
-    val uuid: String,
+    var uuid: String,
 
-    val orderId: Long,
+    var orderId: Long,
 
-    val betItemId: Long,
+    var betItemId: Long,
 )

@@ -9,18 +9,21 @@ import net.purefunc.c2c.lottery.data.dto.OrderDto
 import net.purefunc.c2c.lottery.data.dto.response.OrderDtoRes
 import net.purefunc.c2c.lottery.data.dto.response.SlipDtoRes
 import net.purefunc.c2c.lottery.data.repository.OrderRepository
+import net.purefunc.c2c.lottery.data.repository.WalletRepository
 import net.purefunc.c2c.lottery.data.table.OrderDo
 import net.purefunc.c2c.lottery.data.table.SlipDo
 import net.purefunc.c2c.lottery.ext.genUnixMilli
 import net.purefunc.c2c.lottery.ext.randomUUID
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 
 @Repository
 class OrderRepositoryImpl(
     private val orderDao: OrderDao,
     private val betItemDao: BetItemDao,
     private val slipDao: SlipDao,
+    private val walletRepository: WalletRepository,
 ) : OrderRepository {
 
     @Transactional(readOnly = true)
@@ -65,16 +68,24 @@ class OrderRepositoryImpl(
 
         }
 
-    @Transactional
+    @Transactional(rollbackFor = [Exception::class])
     override suspend fun save(orderDto: OrderDto, email: String) =
         catch {
-            val save =
-                orderDao.save(OrderDo(null, randomUUID(), email, orderDto.orderType, orderDto.multiple, genUnixMilli()))
+            val save = orderDao.save(
+                OrderDo(
+                    id = null,
+                    uuid = randomUUID(),
+                    email = email,
+                    type = orderDto.orderType,
+                    multiple = orderDto.multiple,
+                    createDate = genUnixMilli()
+                )
+            )
             orderDto.betItemUuids
-                .map {
-                    betItemDao.findByUuid(it) ?: throw IllegalStateException()
-                }
+                .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
                 .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
+
+            walletRepository.payForOrder(save.email, save.uuid, BigDecimal.TEN)
 
             save.uuid
         }

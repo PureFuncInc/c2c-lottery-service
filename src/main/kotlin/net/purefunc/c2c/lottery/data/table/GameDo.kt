@@ -10,13 +10,13 @@ data class GameDo(
     @Id
     val id: Long?,
 
-    val uuid: String,
+    var uuid: String,
 
-    val guestName: String,
+    var guestName: String,
 
-    val hostName: String,
+    var hostName: String,
 
-    val sportType: SportType,
+    var sportType: SportType,
 
-    val endSubmitDate: Long,
+    var endSubmitDate: Long,
 )

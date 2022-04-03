@@ -10,13 +10,13 @@ data class OrderDo(
     @Id
     val id: Long?,
 
-    val uuid: String,
+    var uuid: String,
 
-    val email: String,
+    var email: String,
 
-    val type: OrderType,
+    var type: OrderType,
 
-    val multiple: Int,
+    var multiple: Int,
 
-    val createDate: Long,
+    var createDate: Long,
 )

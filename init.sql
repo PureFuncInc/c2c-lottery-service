@@ -21,6 +21,20 @@ create table wallet
 INSERT INTO wallet (email, address, balance)
 VALUES ('yfr.huang@gmail.com', '', 0.0000);
 
+drop table if exists wallet_transaction;
+create table wallet_transaction
+(
+    id             serial
+        constraint wallet_transaction_id_pk primary key,
+    uuid           varchar(255),
+    order_uuid     varchar(255),
+    wallet_id      integer,
+    type           varchar(255),
+    before_balance numeric(19, 4),
+    amount         numeric(19, 4),
+    after_balance  numeric(19, 4),
+    create_date    bigint
+);
 
 drop table if exists game;
 create table game
