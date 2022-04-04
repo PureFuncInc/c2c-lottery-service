@@ -13,7 +13,7 @@ data class OrderDtoRes(
 
     val multiple: Int,
 
-    var totalAmount: BigDecimal,
+    var totalAmount: Int,
 
     var winAmount: BigDecimal,
 

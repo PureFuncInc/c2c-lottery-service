@@ -15,7 +15,7 @@ data class OrderVo(
 
     val multiple: Int,
 
-    val totalAmount: BigDecimal,
+    val totalAmount: Int,
 
     val winAmount: BigDecimal,
 

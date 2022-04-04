@@ -68,7 +68,7 @@ create table sport_order
     email        varchar(255),
     multiple     integer,
     combination  varchar(255),
-    total_amount numeric(19, 4),
+    total_amount integer,
     win_amount   numeric(19, 4),
     status       varchar(255),
     create_date  bigint

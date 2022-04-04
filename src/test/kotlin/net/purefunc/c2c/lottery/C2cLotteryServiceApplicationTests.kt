@@ -10,8 +10,8 @@ class C2cLotteryServiceApplicationTests {
 
     @Test
     fun contextLoads() {
-        val combinations = Sets.combinations(ImmutableSet.of(0, 1, 2, 3, 4, 5), 3)
-        println(combinations.toString())
+        val combinations = Sets.combinations(ImmutableSet.of(1, 2, 3, 4), 3)
+        println(combinations.size)
 
         println(genUnixMilli())
     }

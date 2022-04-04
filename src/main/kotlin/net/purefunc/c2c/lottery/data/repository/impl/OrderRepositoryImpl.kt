@@ -13,6 +13,7 @@ import net.purefunc.c2c.lottery.data.repository.OrderRepository
 import net.purefunc.c2c.lottery.data.repository.WalletRepository
 import net.purefunc.c2c.lottery.data.table.OrderDo
 import net.purefunc.c2c.lottery.data.table.SlipDo
+import net.purefunc.c2c.lottery.ext.combinations
 import net.purefunc.c2c.lottery.ext.genUnixMilli
 import net.purefunc.c2c.lottery.ext.randomUUID
 import org.springframework.stereotype.Repository
@@ -88,6 +89,14 @@ class OrderRepositoryImpl(
     @Transactional(rollbackFor = [Exception::class])
     override suspend fun save(orderDto: OrderDto, email: String) =
         catch {
+            val totalCount = orderDto.combination
+                .map { it.toInt() }
+                .map { combinations[orderDto.betItemUuids.size][it] }
+                .toList()
+                .sum()
+
+            val totalAmount = 10 * orderDto.multiple * totalCount
+
             val save = orderDao.save(
                 OrderDo(
                     id = null,
@@ -95,7 +104,7 @@ class OrderRepositoryImpl(
                     email = email,
                     multiple = orderDto.multiple,
                     combination = orderDto.combination.joinToString(","),
-                    totalAmount = BigDecimal.ZERO,
+                    totalAmount = totalAmount,
                     winAmount = BigDecimal.ZERO,
                     status = OrderStatus.INIT,
                     createDate = genUnixMilli()
@@ -105,7 +114,7 @@ class OrderRepositoryImpl(
                 .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
                 .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
 
-            walletRepository.payForOrder(save.email, save.uuid, BigDecimal.ZERO)
+            walletRepository.payForOrder(save.email, save.uuid, totalAmount.toBigDecimal())
 
             save.uuid
         }
