@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.data.dto.response
 
+import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.enu.BetType
 import java.math.BigDecimal
 
@@ -12,4 +13,6 @@ data class BetItemDtoRes(
     val value: String,
 
     val odds: BigDecimal,
+
+    val status: BetItemStatus,
 )

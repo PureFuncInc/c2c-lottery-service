@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.data.vo
 
+import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.enu.BetType
 import net.purefunc.c2c.lottery.data.enu.SportType
 import java.math.BigDecimal
@@ -14,6 +15,8 @@ data class GameVo(
 
     val sportType: SportType,
 
+    val endSubmitDate: Long,
+
     val betItemUuid: String,
 
     val type: BetType,
@@ -22,5 +25,5 @@ data class GameVo(
 
     val odds: BigDecimal,
 
-    val endSubmitDate: Long,
+    val status: BetItemStatus,
 )

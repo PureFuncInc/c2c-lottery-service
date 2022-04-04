@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.data.table
 
+import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.enu.BetType
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
@@ -20,4 +21,6 @@ data class BetItemDo(
     var value: String,
 
     var odds: BigDecimal,
+
+    var status: BetItemStatus,
 )

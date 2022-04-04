@@ -1,18 +1,17 @@
 package net.purefunc.c2c.lottery.data.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
-import net.purefunc.c2c.lottery.data.enu.OrderType
 import net.purefunc.c2c.lottery.data.repository.OrderRepository
 
 data class OrderDto(
 
-    @Schema(description = "串關類型", example = "C_1_1")
-    val orderType: OrderType,
+    @Schema(description = "串關類型")
+    val combination: List<String>,
 
     @Schema(description = "倍數", example = "10")
     val multiple: Int,
 
-    @Schema(description = "投注項目 UUID", example = "c83fc1f8-cb41-40f0-8b74-7df30a046885")
+    @Schema(description = "投注項目 UUID")
     val betItemUuids: List<String>,
 ) {
 

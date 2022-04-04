@@ -17,7 +17,7 @@ spring:
 
 gmail:
   username: yfr.huang@gmail.com
-  password: alvmrykqxgqcjbqo
+  password:
 
 ---
 

@@ -7,6 +7,7 @@ import net.purefunc.c2c.lottery.data.dao.GameDao
 import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.dto.response.BetItemDtoRes
 import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
+import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.BetItemDo
 import net.purefunc.c2c.lottery.ext.randomUUID
@@ -30,7 +31,15 @@ class GameRepositoryImpl(
                 guestName = gameVos[0].guestName,
                 hostName = gameVos[0].hostName,
                 sportType = gameVos[0].sportType,
-                betItems = gameVos.map { BetItemDtoRes(it.betItemUuid, it.type, it.value, it.odds) }.toList(),
+                betItems = gameVos.map {
+                    BetItemDtoRes(
+                        uuid = it.betItemUuid,
+                        type = it.type,
+                        value = it.value,
+                        odds = it.odds,
+                        status = it.status,
+                    )
+                }.toList(),
                 endSubmitDate = gameVos[0].endSubmitDate,
             )
         }
@@ -47,10 +56,13 @@ class GameRepositoryImpl(
                         hostName = it.value[0].hostName,
                         sportType = it.value[0].sportType,
                         betItems = it.value.map { gameVo ->
-                            BetItemDtoRes(gameVo.betItemUuid,
-                                gameVo.type,
-                                gameVo.value,
-                                gameVo.odds)
+                            BetItemDtoRes(
+                                uuid = gameVo.betItemUuid,
+                                type = gameVo.type,
+                                value = gameVo.value,
+                                odds = gameVo.odds,
+                                status = gameVo.status,
+                            )
                         }.toList(),
                         endSubmitDate = it.value[0].endSubmitDate,
                     )
@@ -62,7 +74,7 @@ class GameRepositoryImpl(
         catch {
             val gameDo = gameDao.save(gameDto.toGameDo())
             gameDto.betItems
-                .map { BetItemDo(null, randomUUID(), gameDo.id!!, it.type, it.value, it.odds) }
+                .map { BetItemDo(null, randomUUID(), gameDo.id!!, it.type, it.value, it.odds, BetItemStatus.ENABLE) }
                 .map { betItemDao.save(it).uuid }
 
             gameDo.uuid

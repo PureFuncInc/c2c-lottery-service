@@ -7,10 +7,12 @@ import net.purefunc.c2c.lottery.data.dao.WalletDao
 import net.purefunc.c2c.lottery.data.table.MemberDo
 import net.purefunc.c2c.lottery.data.table.WalletDo
 import net.purefunc.c2c.lottery.ext.genUnixMilli
+import net.purefunc.c2c.lottery.ext.randomAlphanumeric
 import net.purefunc.c2c.lottery.ext.randomUUID
 import net.purefunc.c2c.lottery.web.CacheContext
 import net.purefunc.c2c.lottery.web.security.JwtToken
 import net.purefunc.core.ext.Slf4j
+import net.purefunc.core.ext.Slf4j.Companion.log
 import net.purefunc.transmit.sdk.GmailClient
 import java.math.BigDecimal
 import java.util.concurrent.ArrayBlockingQueue
@@ -54,22 +56,23 @@ data class AuthDto(
     ) = catch {
         val findMember = memberDao.findByEmail(email) ?: run {
             val saveMember = memberDao.save(MemberDo(null, email, "USER"))
-            walletDao.save(WalletDo(null, saveMember.email, "", BigDecimal.ZERO))
+            walletDao.save(WalletDo(null, saveMember.email, randomAlphanumeric(34), BigDecimal.TEN))
             saveMember
         }
 
         val token = randomUUID()
-        val url = "https://localhost:8080/c2c-lottery-service/api/v1.0/auth?token=$token"
-        threadPoolExecutor.submit(
-            Thread {
-                gmailClient.send(
-                    subject = "Sign in to C2C Lottery",
-                    personal = "C2C Lottery",
-                    address = email,
-                    htmlContent = "<h1>Click the link below to sign in to your C2C Lottery account.</h1><p>This link will expire in 5 minutes and can only be used once.</p><p>$url</p>"
-                )
-            }
-        )
+        val url = "http://localhost:8080/c2c-lottery-service/api/v1.0/auth?token=$token"
+//        threadPoolExecutor.submit(
+//            Thread {
+//                gmailClient.send(
+//                    subject = "Sign in to C2C Lottery",
+//                    personal = "C2C Lottery",
+//                    address = email,
+//                    htmlContent = "<h1>Click the link below to sign in to your C2C Lottery account.</h1><p>This link will expire in 5 minutes and can only be used once.</p><p>$url</p>"
+//                )
+//            }
+//        )
+        log.info(url)
 
         cacheContext.tokenToMember.put(token, findMember)
     }

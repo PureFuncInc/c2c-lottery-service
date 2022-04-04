@@ -1,6 +1,7 @@
 package net.purefunc.c2c.lottery.data.dto.response
 
-import net.purefunc.c2c.lottery.data.enu.OrderType
+import net.purefunc.c2c.lottery.data.enu.OrderStatus
+import java.math.BigDecimal
 
 data class OrderDtoRes(
 
@@ -8,9 +9,15 @@ data class OrderDtoRes(
 
     val email: String,
 
-    val orderType: OrderType,
+    val combination: List<String>,
 
     val multiple: Int,
+
+    var totalAmount: BigDecimal,
+
+    var winAmount: BigDecimal,
+
+    var status: OrderStatus,
 
     val createDate: Long,
 

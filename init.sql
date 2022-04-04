@@ -6,8 +6,7 @@ create table member
     email varchar(255),
     role  varchar(255)
 );
-INSERT INTO member (email, role)
-VALUES ('yfr.huang@gmail.com', 'USER');
+-- INSERT INTO member (email, role) VALUES ('yfr.huang@gmail.com', 'USER');
 
 drop table if exists wallet;
 create table wallet
@@ -18,8 +17,7 @@ create table wallet
     address varchar(255),
     balance numeric(19, 4)
 );
-INSERT INTO wallet (email, address, balance)
-VALUES ('yfr.huang@gmail.com', '', 0.0000);
+-- INSERT INTO wallet (email, address, balance) VALUES ('yfr.huang@gmail.com', '', 0.0000);
 
 drop table if exists wallet_transaction;
 create table wallet_transaction
@@ -57,19 +55,23 @@ create table bet_item
     game_id integer,
     type    varchar(255),
     value   varchar(255),
-    odds    numeric(19, 4)
+    odds    numeric(19, 4),
+    status  varchar(255)
 );
 
 drop table if exists sport_order;
 create table sport_order
 (
-    id          serial
+    id           serial
         constraint sport_order_id_pk primary key,
-    uuid        varchar(255),
-    email       varchar(255),
-    type        varchar(255),
-    multiple    integer,
-    create_date bigint
+    uuid         varchar(255),
+    email        varchar(255),
+    multiple     integer,
+    combination  varchar(255),
+    total_amount numeric(19, 4),
+    win_amount   numeric(19, 4),
+    status       varchar(255),
+    create_date  bigint
 );
 
 drop table if exists slip;

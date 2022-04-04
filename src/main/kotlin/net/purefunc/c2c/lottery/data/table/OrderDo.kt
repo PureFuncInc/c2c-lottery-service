@@ -1,8 +1,9 @@
 package net.purefunc.c2c.lottery.data.table
 
-import net.purefunc.c2c.lottery.data.enu.OrderType
+import net.purefunc.c2c.lottery.data.enu.OrderStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import java.math.BigDecimal
 
 @Table("sport_order")
 data class OrderDo(
@@ -14,9 +15,15 @@ data class OrderDo(
 
     var email: String,
 
-    var type: OrderType,
+    var combination: String,
 
     var multiple: Int,
+
+    var totalAmount: BigDecimal,
+
+    var winAmount: BigDecimal,
+
+    var status: OrderStatus,
 
     var createDate: Long,
 )

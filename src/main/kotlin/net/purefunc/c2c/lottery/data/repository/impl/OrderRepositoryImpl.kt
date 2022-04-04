@@ -8,6 +8,7 @@ import net.purefunc.c2c.lottery.data.dao.SlipDao
 import net.purefunc.c2c.lottery.data.dto.OrderDto
 import net.purefunc.c2c.lottery.data.dto.response.OrderDtoRes
 import net.purefunc.c2c.lottery.data.dto.response.SlipDtoRes
+import net.purefunc.c2c.lottery.data.enu.OrderStatus
 import net.purefunc.c2c.lottery.data.repository.OrderRepository
 import net.purefunc.c2c.lottery.data.repository.WalletRepository
 import net.purefunc.c2c.lottery.data.table.OrderDo
@@ -35,11 +36,22 @@ class OrderRepositoryImpl(
             OrderDtoRes(
                 uuid = orderVos[0].uuid,
                 email = orderVos[0].email,
-                orderType = orderVos[0].orderType,
+                combination = orderVos[0].combination.split(",").toList(),
                 multiple = orderVos[0].multiple,
+                totalAmount = orderVos[0].totalAmount,
+                winAmount = orderVos[0].winAmount,
+                status = orderVos[0].status,
                 createDate = orderVos[0].createDate,
-                slips = orderVos.map { SlipDtoRes(it.guestName, it.hostName, it.sportType, it.type, it.value, it.odds) }
-                    .toList()
+                slips = orderVos.map {
+                    SlipDtoRes(
+                        it.guestName,
+                        it.hostName,
+                        it.sportType,
+                        it.type,
+                        it.value,
+                        it.odds,
+                    )
+                }.toList()
             )
         }
 
@@ -52,16 +64,21 @@ class OrderRepositoryImpl(
                     OrderDtoRes(
                         uuid = it.value[0].uuid,
                         email = it.value[0].email,
-                        orderType = it.value[0].orderType,
+                        combination = it.value[0].combination.split(",").toList(),
                         multiple = it.value[0].multiple,
+                        totalAmount = it.value[0].totalAmount,
+                        winAmount = it.value[0].winAmount,
+                        status = it.value[0].status,
                         createDate = it.value[0].createDate,
                         slips = it.value.map { orderVo ->
-                            SlipDtoRes(orderVo.guestName,
+                            SlipDtoRes(
+                                orderVo.guestName,
                                 orderVo.hostName,
                                 orderVo.sportType,
                                 orderVo.type,
                                 orderVo.value,
-                                orderVo.odds)
+                                orderVo.odds
+                            )
                         }.toList()
                     )
                 }
@@ -76,8 +93,11 @@ class OrderRepositoryImpl(
                     id = null,
                     uuid = randomUUID(),
                     email = email,
-                    type = orderDto.orderType,
                     multiple = orderDto.multiple,
+                    combination = orderDto.combination.joinToString(","),
+                    totalAmount = BigDecimal.ZERO,
+                    winAmount = BigDecimal.ZERO,
+                    status = OrderStatus.INIT,
                     createDate = genUnixMilli()
                 )
             )
@@ -85,7 +105,7 @@ class OrderRepositoryImpl(
                 .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
                 .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
 
-            walletRepository.payForOrder(save.email, save.uuid, BigDecimal.TEN)
+            walletRepository.payForOrder(save.email, save.uuid, BigDecimal.ZERO)
 
             save.uuid
         }
