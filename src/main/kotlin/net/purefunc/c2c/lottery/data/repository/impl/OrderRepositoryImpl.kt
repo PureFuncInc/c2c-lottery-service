@@ -112,7 +112,7 @@ class OrderRepositoryImpl(
             )
             orderDto.betItemUuids
                 .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
-                .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
+                .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!, it.odds)) }
 
             walletRepository.payForOrder(save.email, save.uuid, save.totalAmount)
 

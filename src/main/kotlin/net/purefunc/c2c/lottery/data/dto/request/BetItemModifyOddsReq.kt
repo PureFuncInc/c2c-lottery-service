@@ -10,8 +10,9 @@ data class BetItemModifyOddsReq(
 
     val odds: List<BigDecimal>,
 ) {
-    fun modify(gameRepository: GameRepository, name: String) =
-        catch {
 
+    suspend fun modify(gameRepository: GameRepository, email: String) =
+        catch {
+            gameRepository.updateBetItemsOdds(betItemUuids, email, odds)
         }
 }

@@ -2,6 +2,7 @@ package net.purefunc.c2c.lottery.data.table
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import java.math.BigDecimal
 
 @Table("slip")
 data class SlipDo(
@@ -14,4 +15,6 @@ data class SlipDo(
     var orderId: Long,
 
     var betItemId: Long,
+
+    var odds: BigDecimal,
 )

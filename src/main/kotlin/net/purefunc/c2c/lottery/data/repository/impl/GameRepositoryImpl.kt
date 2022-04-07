@@ -13,6 +13,7 @@ import net.purefunc.c2c.lottery.data.table.BetItemDo
 import net.purefunc.c2c.lottery.ext.randomUUID
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 
 @Repository
 class GameRepositoryImpl(
@@ -74,9 +75,67 @@ class GameRepositoryImpl(
         catch {
             val gameDo = gameDao.save(gameDto.toGameDo(email))
             gameDto.betItems
-                .map { BetItemDo(null, randomUUID(), gameDo.id!!, it.type, it.value, it.odds, BetItemStatus.ENABLE) }
+                .map {
+                    BetItemDo(null,
+                        randomUUID(),
+                        gameDo.id!!,
+                        email,
+                        it.type,
+                        it.value,
+                        it.odds,
+                        BetItemStatus.ENABLE)
+                }
                 .map { betItemDao.save(it).uuid }
 
             gameDo.uuid
         }
+
+    @Transactional(rollbackFor = [Exception::class])
+    override suspend fun updateGameStatus(uuid: String, email: String, status: BetItemStatus) =
+        catch {
+            val game = gameDao.findByUuid(uuid) ?: throw IllegalStateException()
+            game.owner.takeIf { it == email } ?: throw IllegalStateException()
+
+            betItemDao.findAllByGameId(game.id!!)
+                .toList()
+                .forEach {
+                    it.status = status
+                    betItemDao.save(it).uuid
+                }
+
+            uuid
+        }
+
+    @Transactional(rollbackFor = [Exception::class])
+    override suspend fun updateBetItemsStatus(
+        uuids: List<String>,
+        email: String,
+        status: BetItemStatus,
+    ) = catch {
+        uuids.forEach { uuid ->
+            val betItemDo = betItemDao.findByUuid(uuid) ?: throw IllegalStateException()
+            betItemDo.takeIf { it.owner == email } ?: throw IllegalStateException()
+            betItemDo.status = status
+
+            betItemDao.save(betItemDo)
+        }
+
+        uuids
+    }
+
+    override suspend fun updateBetItemsOdds(
+        uuids: List<String>,
+        email: String,
+        odds: List<BigDecimal>,
+    ) = catch {
+        uuids.forEachIndexed { index, uuid ->
+            val betItemDo = betItemDao.findByUuid(uuid) ?: throw IllegalStateException()
+            betItemDo.takeIf { it.owner == email } ?: throw IllegalStateException()
+            betItemDo.odds = odds[index]
+
+            betItemDao.save(betItemDo)
+        }
+
+        uuids
+    }
 }

@@ -16,6 +16,8 @@ data class BetItemDo(
 
     var gameId: Long,
 
+    var owner: String,
+
     var type: BetType,
 
     var value: String,

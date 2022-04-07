@@ -20,8 +20,13 @@ data class GameModifyStatusReq(
             }
     }
 
-    fun modify(gameRepository: GameRepository, email: String) =
+    suspend fun modifyGame(gameRepository: GameRepository, email: String) =
         catch {
+            gameRepository.updateGameStatus(gameUuid, email, status)
+        }
 
+    suspend fun modifyBetItems(gameRepository: GameRepository, email: String) =
+        catch {
+            gameRepository.updateBetItemsStatus(betItemUuids, email, status)
         }
 }

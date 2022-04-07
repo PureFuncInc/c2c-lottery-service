@@ -21,4 +21,6 @@ interface GameDao : CoroutineCrudRepository<GameDo, Long> {
             "(SELECT * FROM game gg ORDER BY gg.end_submit_date DESC LIMIT :limit OFFSET :offset) g " +
             "INNER JOIN bet_item b ON g.id = b.game_id")
     fun findGame(limit: Int, offset: Int): Flow<GameVo>
+
+    suspend fun findByUuid(uuid: String): GameDo?
 }

@@ -54,7 +54,7 @@ class GameController(
     suspend fun modifyGameStatus(
         @RequestBody gameModifyStatusReq: GameModifyStatusReq,
         principal: Principal,
-    ) = gameModifyStatusReq.modify(gameRepository, principal.name).return200()
+    ) = gameModifyStatusReq.modifyGame(gameRepository, principal.name).return200()
 
     @Operation(summary = "修改投注項狀態 (暫停 or 回復)")
     @PatchMapping("/betItems/status")
@@ -62,7 +62,7 @@ class GameController(
     suspend fun modifyBetItemStatus(
         @RequestBody gameModifyStatusReq: GameModifyStatusReq,
         principal: Principal,
-    ) = gameModifyStatusReq.modify(gameRepository, principal.name).return200()
+    ) = gameModifyStatusReq.modifyBetItems(gameRepository, principal.name).return200()
 
     @Operation(summary = "修改投注項目賠率")
     @PatchMapping("/betItems/odds")
@@ -72,11 +72,11 @@ class GameController(
         principal: Principal,
     ) = betItemModifyOddsReq.modify(gameRepository, principal.name).return200()
 
-    @Operation(summary = "賽事結算")
-    @PatchMapping("/result")
-    @PreAuthorize("hasAuthority('USER')")
-    suspend fun modifyBetItemsResult(
-        @RequestBody betItemUuids: List<String>,
-        principal: Principal,
-    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
+//    @Operation(summary = "賽事結算")
+//    @PatchMapping("/result")
+//    @PreAuthorize("hasAuthority('USER')")
+//    suspend fun modifyBetItemsResult(
+//        @RequestBody betItemUuids: List<String>,
+//        principal: Principal,
+//    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
 }
