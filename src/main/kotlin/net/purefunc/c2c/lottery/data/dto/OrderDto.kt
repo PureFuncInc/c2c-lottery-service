@@ -16,10 +16,19 @@ data class OrderDto(
 ) {
 
     companion object {
-        suspend fun queryByUuid(orderRepository: OrderRepository, uuid: String) = orderRepository.findByUuid(uuid)
+        suspend fun queryByUuid(
+            orderRepository: OrderRepository,
+            uuid: String,
+        ) = orderRepository.findByUuid(uuid)
 
         suspend fun queryAll(orderRepository: OrderRepository, page: Int, size: Int) =
             orderRepository.findAll(page, size)
+
+        suspend fun removeByUuid(
+            orderRepository: OrderRepository,
+            uuid: String,
+            email: String,
+        ) = orderRepository.deleteByUuid(uuid, email)
     }
 
     suspend fun add(orderRepository: OrderRepository, email: String) = orderRepository.save(this, email)

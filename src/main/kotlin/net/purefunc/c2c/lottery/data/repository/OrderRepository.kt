@@ -11,4 +11,6 @@ interface OrderRepository {
     suspend fun findAll(page: Int, size: Int): Either<Throwable, List<OrderDtoRes>>
 
     suspend fun save(orderDto: OrderDto, email: String): Either<Throwable, String>
+
+    suspend fun deleteByUuid(uuid: String, email: String): Either<Throwable, String>
 }

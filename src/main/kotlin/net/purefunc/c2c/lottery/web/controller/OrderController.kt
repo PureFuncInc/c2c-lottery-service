@@ -6,6 +6,7 @@ import net.purefunc.c2c.lottery.data.dto.OrderDto
 import net.purefunc.c2c.lottery.data.repository.OrderRepository
 import net.purefunc.c2c.lottery.ext.return200
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -25,9 +26,8 @@ class OrderController(
     @Operation(summary = "根據 uuid 查詢投注單")
     @GetMapping("/{uuid}")
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun getOrdersByUuid(
+    suspend fun getOrderByUuid(
         @PathVariable uuid: String,
-        principal: Principal,
     ) = OrderDto.queryByUuid(orderRepository, uuid).return200()
 
     @Operation(summary = "查詢所有投注單")
@@ -36,14 +36,21 @@ class OrderController(
     suspend fun getOrders(
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "10") size: Int,
-        principal: Principal,
     ) = OrderDto.queryAll(orderRepository, page, size).return200()
 
-    @Operation(summary = "提交投注")
+    @Operation(summary = "提交投注單")
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun postOrders(
         @RequestBody orderDto: OrderDto,
         principal: Principal,
     ) = orderDto.add(orderRepository, principal.name).return200()
+
+    @Operation(summary = "根據 uuid 取消投注單")
+    @DeleteMapping("/{uuid}")
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun deleteOrderByUUid(
+        @PathVariable uuid: String,
+        principal: Principal,
+    ) = OrderDto.removeByUuid(orderRepository, uuid, principal.name).return200()
 }

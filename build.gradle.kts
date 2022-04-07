@@ -37,13 +37,13 @@ repositories {
         url = uri("https://maven.pkg.github.com/PureFuncInc/pure-platform-core")
         credentials {
             username = "Pure-Func-Inc"
-            password = mustHaveProp("GITHUB_PUBLISH_TOKEN")
+            password = "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"
         }
     }
 }
 
 dependencies {
-    implementation("net.purefunc:transmit-sdk:1.3.4")
+    implementation("net.purefunc:transmit-sdk:1.4.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:2.9.3")
 

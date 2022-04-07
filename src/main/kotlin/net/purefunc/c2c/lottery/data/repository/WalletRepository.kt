@@ -4,7 +4,9 @@ import java.math.BigDecimal
 
 interface WalletRepository {
 
-    suspend fun payForOrder(email: String, orderUuid: String, amount: BigDecimal): String
+    suspend fun payForOrder(email: String, orderUuid: String, amount: Int): String
+
+    suspend fun cancelOrder(email: String, orderUuid: String, amount: Int): String
 
     suspend fun deposit(email: String, amount: BigDecimal): String
 

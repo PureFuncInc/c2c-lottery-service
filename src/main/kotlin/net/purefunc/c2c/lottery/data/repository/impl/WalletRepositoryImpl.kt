@@ -19,8 +19,14 @@ class WalletRepositoryImpl(
     override suspend fun payForOrder(
         email: String,
         orderUuid: String,
-        amount: BigDecimal,
-    ) = operate(TransactionType.ORDER, email, orderUuid, amount)
+        amount: Int,
+    ) = operate(TransactionType.ORDER, email, orderUuid, amount.toBigDecimal())
+
+    override suspend fun cancelOrder(
+        email: String,
+        orderUuid: String,
+        amount: Int,
+    ) = operate(TransactionType.CANCEL_ORDER, email, orderUuid, amount.toBigDecimal())
 
     override suspend fun deposit(
         email: String,
@@ -40,6 +46,7 @@ class WalletRepositoryImpl(
     ) = run {
         val opAmount = when (transactionType) {
             TransactionType.ORDER -> amount.negate()
+            TransactionType.CANCEL_ORDER -> amount
             TransactionType.DEPOSIT -> amount
             TransactionType.WITHDRAW -> amount.negate()
         }

@@ -27,7 +27,6 @@ class GameController(
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getGamesByUuid(
         @PathVariable uuid: String,
-        principal: Principal,
     ) = GameDto.queryByUuid(gameRepository, uuid).return200()
 
     @Operation(summary = "查詢所有賽事")
@@ -36,13 +35,36 @@ class GameController(
     suspend fun getGames(
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "10") size: Int,
-        principal: Principal,
     ) = GameDto.queryAll(gameRepository, page, size).return200()
 
     @Operation(summary = "新增賽事")
     @PostMapping
     @PreAuthorize("hasAuthority('USER')")
     suspend fun postGames(
+        @RequestBody gameDto: GameDto,
+        principal: Principal,
+    ) = gameDto.add(gameRepository).return200()
+
+    @Operation(summary = "修改投注項目賠率")
+    @PostMapping
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun postGas(
+        @RequestBody gameDto: GameDto,
+        principal: Principal,
+    ) = gameDto.add(gameRepository).return200()
+
+    @Operation(summary = "修改賽事狀態 (暫停 or 回復")
+    @PostMapping
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun posatGas(
+        @RequestBody gameDto: GameDto,
+        principal: Principal,
+    ) = gameDto.add(gameRepository).return200()
+
+    @Operation(summary = "賽事結算")
+    @PostMapping
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun posatGaaas(
         @RequestBody gameDto: GameDto,
         principal: Principal,
     ) = gameDto.add(gameRepository).return200()

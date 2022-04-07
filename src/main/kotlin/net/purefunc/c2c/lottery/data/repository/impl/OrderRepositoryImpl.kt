@@ -114,7 +114,21 @@ class OrderRepositoryImpl(
                 .map { betItemDao.findByUuid(it) ?: throw IllegalStateException() }
                 .map { slipDao.save(SlipDo(null, randomUUID(), save.id!!, it.id!!)) }
 
-            walletRepository.payForOrder(save.email, save.uuid, totalAmount.toBigDecimal())
+            walletRepository.payForOrder(save.email, save.uuid, save.totalAmount)
+
+            save.uuid
+        }
+
+    @Transactional(rollbackFor = [Exception::class])
+    override suspend fun deleteByUuid(uuid: String, email: String) =
+        catch {
+            val order = orderDao.findByUuid(uuid) ?: throw IllegalStateException()
+            if (order.email != email) throw IllegalStateException()
+
+            order.status = OrderStatus.CANCEL
+            val save = orderDao.save(order)
+
+            walletRepository.cancelOrder(save.email, save.uuid, save.totalAmount)
 
             save.uuid
         }

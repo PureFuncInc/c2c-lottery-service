@@ -25,4 +25,6 @@ interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
             "INNER JOIN bet_item bi ON sp.bet_item_id = bi.id " +
             "INNER JOIN game g ON bi.game_id = g.id")
     fun findOrder(limit: Int, offset: Int): Flow<OrderVo>
+
+    fun findByUuid(uuid: String): OrderDo?
 }
