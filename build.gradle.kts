@@ -37,7 +37,7 @@ repositories {
         url = uri("https://maven.pkg.github.com/PureFuncInc/pure-platform-core")
         credentials {
             username = "Pure-Func-Inc"
-            password = "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"
+            password = mustHaveProp("GITHUB_PUBLISH_TOKEN")
         }
     }
 }
