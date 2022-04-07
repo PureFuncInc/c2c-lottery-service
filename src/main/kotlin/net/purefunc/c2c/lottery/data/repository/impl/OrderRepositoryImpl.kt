@@ -29,9 +29,9 @@ class OrderRepositoryImpl(
 ) : OrderRepository {
 
     @Transactional(readOnly = true)
-    override suspend fun findByUuid(uuid: String) =
+    override suspend fun findByUuid(uuid: String, email: String) =
         catch {
-            val orderVos = orderDao.findOrderByUuid(uuid).toList()
+            val orderVos = orderDao.findOrderByUuid(uuid, email).toList()
             if (orderVos.isEmpty()) throw NoSuchElementException()
 
             OrderDtoRes(
@@ -57,9 +57,9 @@ class OrderRepositoryImpl(
         }
 
     @Transactional(readOnly = true)
-    override suspend fun findAll(page: Int, size: Int) =
+    override suspend fun findAll(email: String, page: Int, size: Int) =
         catch {
-            orderDao.findOrder(size, page * size).toList()
+            orderDao.findOrder(email, size, page * size).toList()
                 .groupBy { it.uuid }
                 .map {
                     OrderDtoRes(

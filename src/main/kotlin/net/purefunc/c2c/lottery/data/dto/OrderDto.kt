@@ -19,10 +19,15 @@ data class OrderDto(
         suspend fun queryByUuid(
             orderRepository: OrderRepository,
             uuid: String,
-        ) = orderRepository.findByUuid(uuid)
+            email: String,
+        ) = orderRepository.findByUuid(uuid, email)
 
-        suspend fun queryAll(orderRepository: OrderRepository, page: Int, size: Int) =
-            orderRepository.findAll(page, size)
+        suspend fun queryAll(
+            orderRepository: OrderRepository,
+            email: String,
+            page: Int,
+            size: Int,
+        ) = orderRepository.findAll(email, page, size)
 
         suspend fun removeByUuid(
             orderRepository: OrderRepository,
@@ -31,5 +36,8 @@ data class OrderDto(
         ) = orderRepository.deleteByUuid(uuid, email)
     }
 
-    suspend fun add(orderRepository: OrderRepository, email: String) = orderRepository.save(this, email)
+    suspend fun add(
+        orderRepository: OrderRepository,
+        email: String,
+    ) = orderRepository.save(this, email)
 }

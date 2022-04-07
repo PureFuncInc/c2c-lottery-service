@@ -28,7 +28,8 @@ class OrderController(
     @PreAuthorize("hasAuthority('USER')")
     suspend fun getOrderByUuid(
         @PathVariable uuid: String,
-    ) = OrderDto.queryByUuid(orderRepository, uuid).return200()
+        principal: Principal,
+    ) = OrderDto.queryByUuid(orderRepository, uuid, principal.name).return200()
 
     @Operation(summary = "查詢所有投注單")
     @GetMapping
@@ -36,7 +37,8 @@ class OrderController(
     suspend fun getOrders(
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "10") size: Int,
-    ) = OrderDto.queryAll(orderRepository, page, size).return200()
+        principal: Principal,
+    ) = OrderDto.queryAll(orderRepository, principal.name, page, size).return200()
 
     @Operation(summary = "提交投注單")
     @PostMapping
