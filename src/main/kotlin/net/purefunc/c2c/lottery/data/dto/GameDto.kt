@@ -30,12 +30,13 @@ data class GameDto(
         suspend fun queryAll(gameRepository: GameRepository, page: Int, size: Int) = gameRepository.findAll(page, size)
     }
 
-    suspend fun add(gameRepository: GameRepository) = gameRepository.save(this)
+    suspend fun add(gameRepository: GameRepository, email: String) = gameRepository.save(this, email)
 
-    fun toGameDo() =
+    fun toGameDo(email: String) =
         GameDo(
             id = null,
             uuid = randomUUID(),
+            owner = email,
             guestName = guestName,
             hostName = hostName,
             sportType = sportType,

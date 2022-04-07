@@ -12,6 +12,8 @@ data class GameDo(
 
     var uuid: String,
 
+    var owner: String,
+
     var guestName: String,
 
     var hostName: String,

@@ -3,10 +3,13 @@ package net.purefunc.c2c.lottery.web.controller
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import net.purefunc.c2c.lottery.data.dto.GameDto
+import net.purefunc.c2c.lottery.data.dto.request.BetItemModifyOddsReq
+import net.purefunc.c2c.lottery.data.dto.request.GameModifyStatusReq
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.ext.return200
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -43,29 +46,37 @@ class GameController(
     suspend fun postGames(
         @RequestBody gameDto: GameDto,
         principal: Principal,
-    ) = gameDto.add(gameRepository).return200()
+    ) = gameDto.add(gameRepository, principal.name).return200()
+
+    @Operation(summary = "修改賽事狀態 (暫停 or 回復)")
+    @PatchMapping("/status")
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun modifyGameStatus(
+        @RequestBody gameModifyStatusReq: GameModifyStatusReq,
+        principal: Principal,
+    ) = gameModifyStatusReq.modify(gameRepository, principal.name).return200()
+
+    @Operation(summary = "修改投注項狀態 (暫停 or 回復)")
+    @PatchMapping("/betItems/status")
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun modifyBetItemStatus(
+        @RequestBody gameModifyStatusReq: GameModifyStatusReq,
+        principal: Principal,
+    ) = gameModifyStatusReq.modify(gameRepository, principal.name).return200()
 
     @Operation(summary = "修改投注項目賠率")
-    @PostMapping
+    @PatchMapping("/betItems/odds")
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun postGas(
-        @RequestBody gameDto: GameDto,
+    suspend fun modifyBetItemsOdds(
+        @RequestBody betItemModifyOddsReq: BetItemModifyOddsReq,
         principal: Principal,
-    ) = gameDto.add(gameRepository).return200()
-
-    @Operation(summary = "修改賽事狀態 (暫停 or 回復")
-    @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
-    suspend fun posatGas(
-        @RequestBody gameDto: GameDto,
-        principal: Principal,
-    ) = gameDto.add(gameRepository).return200()
+    ) = betItemModifyOddsReq.modify(gameRepository, principal.name).return200()
 
     @Operation(summary = "賽事結算")
-    @PostMapping
+    @PatchMapping("/result")
     @PreAuthorize("hasAuthority('USER')")
-    suspend fun posatGaaas(
-        @RequestBody gameDto: GameDto,
+    suspend fun modifyBetItemsResult(
+        @RequestBody betItemUuids: List<String>,
         principal: Principal,
-    ) = gameDto.add(gameRepository).return200()
+    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
 }

@@ -70,9 +70,9 @@ class GameRepositoryImpl(
         }
 
     @Transactional(rollbackFor = [Exception::class])
-    override suspend fun save(gameDto: GameDto) =
+    override suspend fun save(gameDto: GameDto, email: String) =
         catch {
-            val gameDo = gameDao.save(gameDto.toGameDo())
+            val gameDo = gameDao.save(gameDto.toGameDo(email))
             gameDto.betItems
                 .map { BetItemDo(null, randomUUID(), gameDo.id!!, it.type, it.value, it.odds, BetItemStatus.ENABLE) }
                 .map { betItemDao.save(it).uuid }
