@@ -27,5 +27,5 @@ interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
             "WHERE so.email = :email")
     fun findOrder(email: String, limit: Int, offset: Int): Flow<OrderVo>
 
-    fun findByUuid(uuid: String): OrderDo?
+    suspend fun findByUuid(uuid: String): OrderDo?
 }

@@ -72,11 +72,11 @@ class GameController(
         principal: Principal,
     ) = betItemModifyOddsReq.modify(gameRepository, principal.name).return200()
 
-//    @Operation(summary = "賽事結算")
-//    @PatchMapping("/result")
-//    @PreAuthorize("hasAuthority('USER')")
-//    suspend fun modifyBetItemsResult(
-//        @RequestBody betItemUuids: List<String>,
-//        principal: Principal,
-//    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
+    @Operation(summary = "賽事結算")
+    @PatchMapping("/result")
+    @PreAuthorize("hasAuthority('USER')")
+    suspend fun modifyBetItemsResult(
+        @RequestBody betItemUuids: List<String>,
+        principal: Principal,
+    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
 }

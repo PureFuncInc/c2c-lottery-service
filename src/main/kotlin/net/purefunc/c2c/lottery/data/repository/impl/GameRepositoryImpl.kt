@@ -1,6 +1,7 @@
 package net.purefunc.c2c.lottery.data.repository.impl
 
 import arrow.core.Either.Companion.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import net.purefunc.c2c.lottery.data.dao.BetItemDao
 import net.purefunc.c2c.lottery.data.dao.GameDao
@@ -112,6 +113,8 @@ class GameRepositoryImpl(
         email: String,
         status: BetItemStatus,
     ) = catch {
+
+
         uuids.forEach { uuid ->
             val betItemDo = betItemDao.findByUuid(uuid) ?: throw IllegalStateException()
             betItemDo.takeIf { it.owner == email } ?: throw IllegalStateException()
@@ -137,5 +140,23 @@ class GameRepositoryImpl(
         }
 
         uuids
+    }
+
+    override suspend fun updateBetItemsResult(
+        betItemUuids: List<String>,
+        email: String,
+    ) = catch {
+        val betItem = betItemDao.findByUuid(betItemUuids[0]) ?: throw IllegalStateException()
+        betItemDao.findAllByGameId(betItem.gameId)
+            .map {
+                if (betItemUuids.contains(it.uuid)) {
+                    it.status = BetItemStatus.WIN
+                } else {
+                    it.status = BetItemStatus.NO_WIN
+                }
+                betItemDao.save(it)
+            }
+
+        betItemUuids
     }
 }

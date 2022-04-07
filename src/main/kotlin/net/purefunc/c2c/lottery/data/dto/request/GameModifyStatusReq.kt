@@ -14,9 +14,13 @@ data class GameModifyStatusReq(
 ) {
 
     companion object {
-        fun modify(gameRepository: GameRepository, betItemUuids: List<String>, email: String) =
+        suspend fun modify(gameRepository: GameRepository, betItemUuids: List<String>, email: String) =
             catch {
+                gameRepository.updateBetItemsResult(betItemUuids, email)
 
+//                thread {
+//                    gameRepository.updateGameResult(betItemUuids[0])
+//                }.start()
             }
     }
 
