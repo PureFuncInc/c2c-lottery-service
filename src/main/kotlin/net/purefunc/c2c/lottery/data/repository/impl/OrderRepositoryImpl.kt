@@ -13,9 +13,9 @@ import net.purefunc.c2c.lottery.data.repository.OrderRepository
 import net.purefunc.c2c.lottery.data.repository.WalletRepository
 import net.purefunc.c2c.lottery.data.table.OrderDo
 import net.purefunc.c2c.lottery.data.table.SlipDo
-import net.purefunc.c2c.lottery.ext.combinations
-import net.purefunc.c2c.lottery.ext.genUnixMilli
-import net.purefunc.c2c.lottery.ext.randomUUID
+import net.purefunc.core.ext.combinations
+import net.purefunc.core.ext.genUnixMilli
+import net.purefunc.core.ext.randomUUID
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal

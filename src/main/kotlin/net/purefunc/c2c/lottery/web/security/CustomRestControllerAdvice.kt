@@ -1,8 +1,8 @@
 package net.purefunc.c2c.lottery.web.security
 
-import net.purefunc.c2c.lottery.ext.randomUUID
 import net.purefunc.core.ext.Slf4j
 import net.purefunc.core.ext.Slf4j.Companion.log
+import net.purefunc.core.ext.randomUUID
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice

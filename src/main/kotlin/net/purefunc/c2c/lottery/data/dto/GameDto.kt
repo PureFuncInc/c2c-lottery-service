@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import net.purefunc.c2c.lottery.data.enu.SportType
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.GameDo
-import net.purefunc.c2c.lottery.ext.randomUUID
+import net.purefunc.core.ext.randomUUID
 
 data class GameDto(
 

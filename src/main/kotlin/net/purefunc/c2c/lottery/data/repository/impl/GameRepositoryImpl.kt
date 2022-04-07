@@ -10,7 +10,7 @@ import net.purefunc.c2c.lottery.data.dto.response.GameDtoRes
 import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.data.table.BetItemDo
-import net.purefunc.c2c.lottery.ext.randomUUID
+import net.purefunc.core.ext.randomUUID
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal

@@ -3,7 +3,7 @@ package net.purefunc.c2c.lottery.web.security
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
-import net.purefunc.c2c.lottery.ext.randomUUID
+import net.purefunc.core.ext.randomUUID
 import java.util.Date
 
 class JwtToken(

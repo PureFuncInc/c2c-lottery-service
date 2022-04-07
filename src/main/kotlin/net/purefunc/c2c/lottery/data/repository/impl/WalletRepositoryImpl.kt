@@ -5,8 +5,8 @@ import net.purefunc.c2c.lottery.data.dao.WalletTransactionDao
 import net.purefunc.c2c.lottery.data.enu.TransactionType
 import net.purefunc.c2c.lottery.data.repository.WalletRepository
 import net.purefunc.c2c.lottery.data.table.WalletTransactionDo
-import net.purefunc.c2c.lottery.ext.genUnixMilli
-import net.purefunc.c2c.lottery.ext.randomUUID
+import net.purefunc.core.ext.genUnixMilli
+import net.purefunc.core.ext.randomUUID
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 
