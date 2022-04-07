@@ -9,7 +9,7 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
 
     @Query("SELECT " +
-            "so.uuid, so.email, so.type as order_type, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, bi.odds " +
+            "so.uuid, so.email, so.type as order_type, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds " +
             "FROM " +
             "sport_order so INNER JOIN slip sp ON so.id = sp.order_id " +
             "INNER JOIN bet_item bi ON sp.bet_item_id = bi.id " +
@@ -18,7 +18,7 @@ interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
     fun findOrderByUuid(uuid: String, email: String): Flow<OrderVo>
 
     @Query("SELECT " +
-            "so.uuid, so.email, so.type as order_type, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, bi.odds " +
+            "so.uuid, so.email, so.type as order_type, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds " +
             "FROM " +
             "(SELECT soo.id, soo.uuid, soo.email, soo.type, soo.multiple, soo.create_date FROM sport_order soo ORDER BY soo.create_date DESC LIMIT :limit OFFSET :offset) so " +
             "INNER JOIN slip sp ON so.id = sp.order_id " +
