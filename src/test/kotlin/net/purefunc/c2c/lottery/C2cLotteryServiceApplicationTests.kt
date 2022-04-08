@@ -2,7 +2,7 @@ package net.purefunc.c2c.lottery
 
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Sets
-import net.purefunc.c2c.lottery.ext.genUnixMilli
+import net.purefunc.core.ext.genUnixMilli
 import org.junit.jupiter.api.Test
 
 //@SpringBootTest

@@ -13,5 +13,5 @@ data class OrderOddsVo(
 
     val odds: BigDecimal,
 
-    val betItemStatus: BetItemStatus,
+    val status: BetItemStatus,
 )

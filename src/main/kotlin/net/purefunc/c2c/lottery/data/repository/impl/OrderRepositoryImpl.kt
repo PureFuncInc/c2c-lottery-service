@@ -51,6 +51,7 @@ class OrderRepositoryImpl(
                         it.type,
                         it.value,
                         it.odds,
+                        it.betItemStatus,
                     )
                 }.toList()
             )
@@ -78,7 +79,8 @@ class OrderRepositoryImpl(
                                 orderVo.sportType,
                                 orderVo.type,
                                 orderVo.value,
-                                orderVo.odds
+                                orderVo.odds,
+                                orderVo.betItemStatus,
                             )
                         }.toList()
                     )
