@@ -17,10 +17,6 @@ data class GameModifyStatusReq(
         suspend fun modify(gameRepository: GameRepository, betItemUuids: List<String>, email: String) =
             catch {
                 gameRepository.updateBetItemsResult(betItemUuids, email)
-
-//                thread {
-//                    gameRepository.updateGameResult(betItemUuids[0])
-//                }.start()
             }
     }
 

@@ -1,5 +1,6 @@
 package net.purefunc.c2c.lottery.data.vo
 
+import net.purefunc.c2c.lottery.data.enu.BetItemStatus
 import net.purefunc.c2c.lottery.data.enu.BetType
 import net.purefunc.c2c.lottery.data.enu.OrderStatus
 import net.purefunc.c2c.lottery.data.enu.SportType
@@ -29,9 +30,11 @@ data class OrderVo(
 
     val sportType: SportType,
 
-    var type: BetType,
+    val type: BetType,
 
-    var value: String,
+    val value: String,
 
-    var odds: BigDecimal,
+    val odds: BigDecimal,
+
+    val betItemStatus: BetItemStatus,
 )

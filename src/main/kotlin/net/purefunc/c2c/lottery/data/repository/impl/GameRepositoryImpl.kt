@@ -113,8 +113,6 @@ class GameRepositoryImpl(
         email: String,
         status: BetItemStatus,
     ) = catch {
-
-
         uuids.forEach { uuid ->
             val betItemDo = betItemDao.findByUuid(uuid) ?: throw IllegalStateException()
             betItemDo.takeIf { it.owner == email } ?: throw IllegalStateException()
