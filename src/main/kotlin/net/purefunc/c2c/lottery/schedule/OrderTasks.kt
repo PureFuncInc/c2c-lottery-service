@@ -25,22 +25,22 @@ class OrderTasks(
     @Scheduled(cron = "0 */1 * * * *")
     fun calculateOrderWinAmountPart1() =
         runBlocking {
-            val uuids = orderDao.findOrder(OrderStatus.INIT)
+            orderDao.findOrder(OrderStatus.INIT)
                 .toList()
                 .groupBy { it.uuid }
                 .filter {
-                    it.value.any { orderResultVo -> !statusFilter.contains(orderResultVo.status) }
+                    it.value.none { orderResultVo -> !statusFilter.contains(orderResultVo.status) }
                 }
                 .map { it.key }
                 .toList()
-
-            uuids.map {
-                val order = orderDao.findByUuid(it) ?: throw IllegalStateException()
-                order.status = OrderStatus.DRAWING
-            }
+                .map {
+                    val order = orderDao.findByUuid(it) ?: throw IllegalStateException()
+                    order.status = OrderStatus.DRAWING
+                    orderDao.save(order)
+                }
         }
 
-    @Scheduled(cron = "30 */1 * * * *")
+    //    @Scheduled(cron = "30 */1 * * * *")
     fun calculateOrderWinAmountPart2() =
         runBlocking {
             orderDao.findOrderOdds(OrderStatus.DRAWING)
@@ -58,8 +58,9 @@ class OrderTasks(
                                                 b.forEach { c: OrderOddsVo ->
                                                     if (c.betItemStatus == BetItemStatus.WIN) {
                                                         winAmount =
-                                                            winAmount.plus(BigDecimal.TEN.multiply(c.multiple.toBigDecimal())
-                                                                .multiply(c.odds))
+                                                            winAmount.plus(
+                                                                BigDecimal.TEN.multiply(c.multiple.toBigDecimal())
+                                                                    .multiply(c.odds))
                                                     }
                                                 }
                                             }

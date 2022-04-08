@@ -28,5 +28,9 @@ interface GameRepository {
         odds: List<BigDecimal>,
     ): Either<Throwable, List<String>>
 
-    suspend fun updateBetItemsResult(betItemUuids: List<String>, email: String): Either<Throwable, List<String>>
+    suspend fun updateBetItemsResult(
+        gameUuid: String,
+        betItemUuids: List<String>,
+        email: String,
+    ): Either<Throwable, List<String>>
 }

@@ -10,11 +10,6 @@ data class GameModifyStatusReq(
     val status: BetItemStatus,
 ) {
 
-    companion object {
-        suspend fun modify(gameRepository: GameRepository, betItemUuids: List<String>, email: String) =
-            gameRepository.updateBetItemsResult(betItemUuids, email)
-    }
-
     suspend fun modifyGame(gameRepository: GameRepository, email: String) =
         gameRepository.updateGameStatus(gameUuid, email, status)
 }

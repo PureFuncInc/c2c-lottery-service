@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.dto.request.BetItemModifyOddsReq
 import net.purefunc.c2c.lottery.data.dto.request.BetItemModifyStatusReq
+import net.purefunc.c2c.lottery.data.dto.request.GameModifyResultReq
 import net.purefunc.c2c.lottery.data.dto.request.GameModifyStatusReq
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.ext.return200
@@ -79,7 +80,7 @@ class GameController(
     @PatchMapping("/result")
     @PreAuthorize("hasAuthority('USER')")
     suspend fun modifyBetItemsResult(
-        @RequestBody betItemUuids: List<String>,
+        @RequestBody gameModifyResultReq: GameModifyResultReq,
         principal: Principal,
-    ) = GameModifyStatusReq.modify(gameRepository, betItemUuids, principal.name).return200()
+    ) = gameModifyResultReq.modify(gameRepository, principal.name).return200()
 }

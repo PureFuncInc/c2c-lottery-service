@@ -12,7 +12,7 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
 
     @Query("SELECT " +
-            "so.uuid, so.email, so.type as order_type, so.combination, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds, bi.status as bet_item_status " +
+            "so.uuid, so.email, so.combination, so.multiple, so.total_amount, so.win_amount, so.status, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds, bi.status as bet_item_status " +
             "FROM " +
             "sport_order so INNER JOIN slip sp ON so.id = sp.order_id " +
             "INNER JOIN bet_item bi ON sp.bet_item_id = bi.id " +
@@ -21,9 +21,9 @@ interface OrderDao : CoroutineCrudRepository<OrderDo, Long> {
     fun findOrderByUuid(uuid: String, email: String): Flow<OrderVo>
 
     @Query("SELECT " +
-            "so.uuid, so.email, so.type as order_type, so.combination, so.multiple, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds, bi.status as bet_item_status " +
+            "so.uuid, so.email, so.combination, so.multiple, so.total_amount, so.win_amount, so.status, so.create_date, g.guest_name, g.host_name, g.sport_type as sport_type, bi.type, bi.value, sp.odds, bi.status as bet_item_status " +
             "FROM " +
-            "(SELECT soo.id, soo.uuid, soo.email, soo.type, soo.multiple, soo.create_date FROM sport_order soo ORDER BY soo.create_date DESC LIMIT :limit OFFSET :offset) so " +
+            "(SELECT soo.id, soo.combination, soo.uuid, soo.email, soo.multiple, soo.total_amount, soo.win_amount, soo.status, soo.create_date FROM sport_order soo ORDER BY soo.create_date DESC LIMIT :limit OFFSET :offset) so " +
             "INNER JOIN slip sp ON so.id = sp.order_id " +
             "INNER JOIN bet_item bi ON sp.bet_item_id = bi.id " +
             "INNER JOIN game g ON bi.game_id = g.id " +
