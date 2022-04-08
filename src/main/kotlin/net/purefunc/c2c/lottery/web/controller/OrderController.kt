@@ -2,6 +2,7 @@ package net.purefunc.c2c.lottery.web.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import net.purefunc.c2c.lottery.data.dto.OrderDto
 import net.purefunc.c2c.lottery.data.repository.OrderRepository
 import net.purefunc.c2c.lottery.ext.return200
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
+@Tag(name = "投注相關 API")
 @RestController
 @RequestMapping("/api/v1.0/orders")
 @SecurityRequirement(name = "BearerAuth")

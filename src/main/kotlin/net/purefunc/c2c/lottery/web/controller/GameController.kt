@@ -2,8 +2,10 @@ package net.purefunc.c2c.lottery.web.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import net.purefunc.c2c.lottery.data.dto.GameDto
 import net.purefunc.c2c.lottery.data.dto.request.BetItemModifyOddsReq
+import net.purefunc.c2c.lottery.data.dto.request.BetItemModifyStatusReq
 import net.purefunc.c2c.lottery.data.dto.request.GameModifyStatusReq
 import net.purefunc.c2c.lottery.data.repository.GameRepository
 import net.purefunc.c2c.lottery.ext.return200
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
+@Tag(name = "賽事相關 API")
 @RestController
 @RequestMapping("/api/v1.0/games")
 @SecurityRequirement(name = "BearerAuth")
@@ -48,7 +51,7 @@ class GameController(
         principal: Principal,
     ) = gameDto.add(gameRepository, principal.name).return200()
 
-    @Operation(summary = "修改賽事狀態 (暫停 or 回復)")
+    @Operation(summary = "修改賽事狀態 (暫停 or 回復 or 取消)")
     @PatchMapping("/status")
     @PreAuthorize("hasAuthority('USER')")
     suspend fun modifyGameStatus(
@@ -56,13 +59,13 @@ class GameController(
         principal: Principal,
     ) = gameModifyStatusReq.modifyGame(gameRepository, principal.name).return200()
 
-    @Operation(summary = "修改投注項狀態 (暫停 or 回復)")
+    @Operation(summary = "修改投注項狀態 (暫停 or 回復 or 取消)")
     @PatchMapping("/betItems/status")
     @PreAuthorize("hasAuthority('USER')")
     suspend fun modifyBetItemStatus(
-        @RequestBody gameModifyStatusReq: GameModifyStatusReq,
+        @RequestBody betItemModifyStatusReq: BetItemModifyStatusReq,
         principal: Principal,
-    ) = gameModifyStatusReq.modifyBetItems(gameRepository, principal.name).return200()
+    ) = betItemModifyStatusReq.modifyBetItems(gameRepository, principal.name).return200()
 
     @Operation(summary = "修改投注項目賠率")
     @PatchMapping("/betItems/odds")

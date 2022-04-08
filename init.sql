@@ -40,6 +40,7 @@ create table game
     id              serial
         constraint game_id_pk primary key,
     uuid            varchar(255),
+    owner           varchar(255),
     guest_name      varchar(255),
     host_name       varchar(255),
     sport_type      varchar(255),
@@ -53,6 +54,7 @@ create table bet_item
         constraint bet_item_id_pk primary key,
     uuid    varchar(255),
     game_id integer,
+    owner   varchar(255),
     type    varchar(255),
     value   varchar(255),
     odds    numeric(19, 4),
@@ -66,8 +68,8 @@ create table sport_order
         constraint sport_order_id_pk primary key,
     uuid         varchar(255),
     email        varchar(255),
-    multiple     integer,
     combination  varchar(255),
+    multiple     integer,
     total_amount integer,
     win_amount   numeric(19, 4),
     status       varchar(255),
@@ -81,5 +83,6 @@ create table slip
         constraint slip_id_pk primary key,
     uuid        varchar(255),
     order_id    integer,
-    bet_item_id integer
+    bet_item_id integer,
+    odds        numeric(19, 4)
 );

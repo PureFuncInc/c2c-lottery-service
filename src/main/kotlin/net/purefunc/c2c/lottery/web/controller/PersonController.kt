@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
-@Tag(name = "Person 頁面")
+@Tag(name = "個人相關 API")
 @RestController
 @RequestMapping("/api/v1.0/person")
 @SecurityRequirement(name = "BearerAuth")

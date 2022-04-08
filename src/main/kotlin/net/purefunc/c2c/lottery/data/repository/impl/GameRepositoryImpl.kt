@@ -30,6 +30,7 @@ class GameRepositoryImpl(
 
             GameDtoRes(
                 uuid = gameVos[0].uuid,
+                owner = gameVos[0].owner,
                 guestName = gameVos[0].guestName,
                 hostName = gameVos[0].hostName,
                 sportType = gameVos[0].sportType,
@@ -54,6 +55,7 @@ class GameRepositoryImpl(
                 .map {
                     GameDtoRes(
                         uuid = it.value[0].uuid,
+                        owner = it.value[0].owner,
                         guestName = it.value[0].guestName,
                         hostName = it.value[0].hostName,
                         sportType = it.value[0].sportType,

@@ -6,6 +6,8 @@ data class GameDtoRes(
 
     val uuid: String,
 
+    val owner: String,
+
     val guestName: String,
 
     val hostName: String,
