@@ -22,7 +22,7 @@ class CustomErrorHandler {
                     is BadSqlGrammarException -> ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     else -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 }
-                responseBodyBuilder.header("log-uuid", this).body(null)
+                responseBodyBuilder.header("error-log-uuid", this).body(null)
             }
     }
 }
